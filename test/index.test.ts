@@ -10,7 +10,7 @@ describe('validateEmail', () => {
 
 describe('validateIdCard', () => {
   test('true', () => {
-    assert.strictEqual(validateIdCard('500228199409055063'), true)
+    assert.strictEqual(validateIdCard('500228199409055000'), true)
   })
 })
 
