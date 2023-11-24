@@ -1,109 +1,70 @@
-# TypeScript + Rollup 开发工具库
-## 初始化项目
+## 安装
 ```
-npm init
+npm install -S loey-utils
 ```
-## 安装依赖
-依赖 | 作用
---- | --- 
-rollup | JavaScript模块打包器，可以将小块代码编译成大块复杂的代码
-rollup-plugin-dts | 生成`d.ts`文件
-rollup-plugin-esbuild | Rollup 和 Esbuild 之间的集成
-rollup-plugin-typescript2 | Rollup 和 TypeScript 之间的集成
-@rollup/plugin-node-resolve | 在 node_modules 中找到并捆绑第三方依赖项
-@rollup/plugin-commonjs | 将 CommonJS 模块转换为 ES6
-@rollup/plugin-json | 将 .json 文件转换为 ES6 模块
-@rollup/plugin-alias | 定义和解析捆绑包依赖项的别名
-@rollup/plugin-babel | 使用 Babel 编译文件
-@babel/core | Babel 核心库
-@babel/cli | 
-@babel/plugin-proposal-class-properties | 
-@babel/plugin-transform-classes | 
-@babel/plugin-transform-runtime | 
-@babel/preset-env | 
-@babel/preset-typescript | 
-esbuild | Esbuild 核心库
- |  
 
-**babel 相关依赖的版本大等级需保持一致**
-## Rollup 配置
+## 工具函数
 ```
-import path from 'path'
-import {fileURLToPath} from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-import rollupTypescript from 'rollup-plugin-typescript2'
-import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel'
-import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import { DEFAULT_EXTENSIONS } from '@babel/core'
-
-import pkg from './package.json' assert { type: 'json' }
-
-const paths = {
-  input: path.join(__dirname, '/src/index.ts'),
-  output: path.join(__dirname, '/lib')
-}
-
-const rollupConfig = {
-  input: paths.input,
-  output: [
-    // 输出 commonjs 规范的代码
-    {
-      file: path.join(paths.output, 'index.js'),
-      format: 'cjs',
-      name: pkg.name
-    },
-    // 输出 es 规范的代码
-    {
-      file: path.join(paths.output, 'index.esm.js'),
-      format: 'es',
-      name: pkg.name
-    }
-  ],
-  plugins: [
-    // 使得 rollup 支持 commonjs 规范，识别 commonjs 规范的依赖
-    commonjs(),
-    // 配合 commonjs 解析第三方模块
-    resolve(),
-    rollupTypescript(),
-    getBabelOutputPlugin({
-      configFile: path.resolve(__dirname, '.babelrc'),
-      allowAllFormats: true
-    }),
-    babel({
-      babelHelpers: 'runtime',
-      skipPreflightCheck: true,
-      exclude: '**/node_modules/**',
-      extensions: [
-        ...DEFAULT_EXTENSIONS,
-        '.ts'
-      ]
-    })
-  ]
-}
-
-export default rollupConfig
-```
-## 配置 .babelrc
-```
-{
-  "presets": [
-    "@babel/preset-env"
-  ],
-  "plugins": [
-    [
-      "@babel/plugin-proposal-class-properties",
-      { "loose": true }
-    ],
-    [
-      "@babel/plugin-transform-runtime",
-      { "corejs": 2 }
-    ],
-    [
-      "@babel/plugin-transform-classes"
-    ]
-  ]
-}
+// 验证邮箱
+validateEmail(value),
+// 验证身份证
+validateIdCard(value), 
+// 验证只能输入-、字母、数字、中文
+validateCenterlineLetterNumberChinese(value), 
+// 验证正整数
+validateInteger(value), 
+// 验证ip地址
+validateIp(value), 
+// 验证纬度
+validateLat(value), 
+// 验证必须有一位数字和字母
+validateLetterAndNumber(value), 
+// 验证经度
+validateLng(value), 
+// 验证手机号码
+validatePhone(value), 
+// 验证车牌号
+validatePlateNum(value), 
+// 验证前后空格
+validatePreAndAfterSpace(value), 
+// 验证只能输入_、字母、数字、中文
+validateUnderlineLetterNumberChinese(value), 
+// 判断数组
+isArray(value),
+// 判断数字
+isNumber(value),
+// 判断对象
+isObject, 
+// 验证英文数字
+letterNumber(value), 
+// 验证字母中文数字
+letterNumberChinese(value), 
+// 交换日期/时间
+exchangeDateTime(startDate, endDate), 
+// 获取当前日期是当月的第几周
+getMonthWeek(date), 
+sleep, 
+sleepSync, 
+// 前缀补0
+preFixInt(number), 
+// 16进制转2进制
+hexToBin(),
+// 2进制转16进制
+binToHex, 
+// 四舍五入保留fixed位小数
+numberFixed(number, fixed), 
+// 84坐标系转百度坐标系
+wgs84tobd09(lng, lat), 
+// 84坐标系转高德坐标系
+wgs84togcj02(lng, lat),
+// 高德坐标系转84坐标系
+gcj02towgs84(lng, lat), 
+// 将经纬度格式转换为度分秒格式
+formatDegree(value), 
+// 获取两点之间的中间点
+getIntermediatePoint(point1: {lng, lat}, point2: {lng, lat}), 
+// 在字符串指定位置插入新字符串
+insertStr(source, start, newStr), 
+// 在经纬度数值最后7位前添加小数点
+handleLatLngValue(lng, lat)
 ```
