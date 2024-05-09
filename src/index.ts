@@ -30,6 +30,8 @@ import {
   letterNumber,
   letterNumberChinese,
 } from './validate';
+import AudioPlayer from './audio-player';
+import WebSocketConnect from './websocket'
 
 export {
   validateEmail,
@@ -63,5 +65,7 @@ export {
   formatDegree,
   getIntermediatePoint,
   insertStr,
-  handleLatLngValue
+  handleLatLngValue,
+  AudioPlayer,
+  WebSocketConnect
 }
